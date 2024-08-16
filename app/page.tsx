@@ -4,7 +4,7 @@ import Link from "next/link";
 export default function Home() {
   return (
     
-  <div className="relative bg-cover bg-center w-screen h-screen " style={{backgroundImage:"url(/streaver-calidad.png)"}}>
+  <div className="relative bg-cover bg-center  " style={{backgroundImage:"url(/streaver-calidad.png)"}}>
     <div className="py-4">
       <img src="/iconynombre.png" alt="nomicon" />
     </div>
