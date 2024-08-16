@@ -24,7 +24,7 @@ export default function SearchBar({placeholder}:{placeholder:string}) {
 
     return (
        
-            <input type='text' className=' w-1/4 p-2 m-2 rounded-md' placeholder={placeholder} onChange={(e)=>buscar(e.target.value)} defaultValue={parametrosBusqueda.get('userid')?.toString()}/>
+        <input type='text' className=' w-1/4 p-2 m-2 rounded-md' placeholder={placeholder} onChange={(e)=>buscar(e.target.value)} defaultValue={parametrosBusqueda.get('userid')?.toString()}/>
         
     );
 

@@ -9,9 +9,7 @@ const lusitana = Nunito({ subsets: ["latin"], weight: ["400"] });
 export const metadata: Metadata = {
   title: "Streaver-test",
   description: "Agustin Manganelli",
-  icons:{
-    icon: "/icono.jpg",
-  }
+  icons:{icon: "/icono.jpg"}
   
 };
 

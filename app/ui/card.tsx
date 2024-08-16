@@ -1,8 +1,7 @@
 'use client'
+
 import useSWR from 'swr';
-//import { fetchDatos } from '../datos';
 import { UserCircleIcon } from '@heroicons/react/16/solid';
-import { url } from 'inspector';
 import { useState } from 'react';
 
 
@@ -27,45 +26,35 @@ interface cartasUrl{
 }
 
 export default  function CartasDatos({url}:{url:string}){
-    
-    let  urlbase = 'https://jsonplaceholder.typicode.com/posts';
-   
     const [conexionLenta,setConexionLenta] = useState(false);
-    
-    
-        
-        const { data: datos,error,isLoading,isValidating} = useSWR<valoresCarta[]>(url,fetcher,{
-            revalidateOnFocus:true,
-            revalidateOnReconnect:true,
-            shouldRetryOnError:true,
-            dedupingInterval:1000,
-            onLoadingSlow:()=>{setConexionLenta(true);
-                console.log("conexionLenta")
-            },loadingTimeout:1000,
-        
+
+    const { data: datos,error,isLoading,isValidating} = useSWR<valoresCarta[]>(url,fetcher,{
+        revalidateOnFocus:true,
+        revalidateOnReconnect:true,
+        shouldRetryOnError:true,
+        dedupingInterval:1000,
+        onLoadingSlow:()=>{
+            setConexionLenta(true);
+            console.log("conexionLenta")
+        },loadingTimeout:500,
         });
         
-   
-
    if (error) return <div>Error al cargar los datos</div>
-
-   if(conexionLenta && datos)setConexionLenta(false);
-
-    if (conexionLenta) {console.log('hola');
-        return <div className=' text-red-600'>Conexion</div>}
-
-    if (isLoading||isValidating) return <div>Cargando datos..</div>
-
-    if (!datos || datos.length===0) return <div>No hay datos</div>
-    
+   if(conexionLenta && datos && !isLoading && !isValidating)setConexionLenta(false);
+   if (conexionLenta) {
+        console.log('hola');
+        return <div className='flex items-center pt-5 text-lg bg-yellow-100 rounded-md text-yellow-600 justify-center'>La conexion es lenta, podria tardar mas de lo esperado...</div>
+    }
+    if (isLoading||isValidating) return <div className='flex justify-center items-center pt-5 text-lg'>Cargando datos..</div>
+    if (!datos || datos.length===0) return <div className='flex justify-center items-center pt-5 text-lg'>No hay datos disponibles para ese usuario</div>
     
     return (
         <div className=' px-4'>
-                <div className=' flex-wrap flex gap-4 '>
-                    {datos.map((dato:valoresCarta)=>(<Card key={dato.id} userId={dato.userId}id={dato.id} title={dato.title} body={dato.body}/>
-                    ))}
-                </div>
+            <div className=' flex-wrap flex gap-4 '>
+                {datos.map((dato:valoresCarta)=>(<Card key={dato.id} userId={dato.userId}id={dato.id} title={dato.title} body={dato.body}/>
+                ))}
             </div>
+        </div>
     )
 
 }
