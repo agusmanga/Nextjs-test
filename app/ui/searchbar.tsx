@@ -2,13 +2,14 @@
 
 import React from "react"
 import { useSearchParams,usePathname,useRouter } from "next/navigation"
+import { useDebouncedCallback } from "use-debounce";
 
 export default function SearchBar({placeholder}:{placeholder:string}) {
     const parametrosBusqueda = useSearchParams();
     const direccion = usePathname();
     const {replace} = useRouter();
 
-    function buscar(termino:string){
+    const buscar = useDebouncedCallback((termino)=>{
         console.log(termino);
         const parametro = new URLSearchParams(parametrosBusqueda);
         if (termino){
@@ -19,7 +20,7 @@ export default function SearchBar({placeholder}:{placeholder:string}) {
             parametro.delete('userId');
         }
         replace(`${direccion}?${parametro.toString()}`);
-}
+},250);
 
     return (
        
