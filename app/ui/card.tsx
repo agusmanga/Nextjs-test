@@ -1,6 +1,10 @@
+'use client'
 import useSWR from 'swr';
 //import { fetchDatos } from '../datos';
 import { UserCircleIcon } from '@heroicons/react/16/solid';
+import { url } from 'inspector';
+
+
 
 interface valoresCarta{
     userId:number;
@@ -8,26 +12,38 @@ interface valoresCarta{
     title:string;
     body:string;
 }
-const fetcher = (url: string) => fetch(url).then((res) => res.json())
 
-export default function CartasDatos(){
+const fetcher = async (url:string) => {
+    const res = await fetch(url);
+    if (!res.ok){
+        throw new Error('Error al cargar los datos');
+    }
+    return res.json();
+}
+
+interface cartasUrl{
+    url:string;
+}
+
+export default  function CartasDatos({url}:{url:string}){
     
-
-
-    /*const datos = await fetch('https://jsonplaceholder.typicode.com/posts')
-    const datosJson =  await datos.json()
-*/
-    const {data: datos,error,isValidating} = useSWR<valoresCarta[]>('https://jsonplaceholder.typicode.com/posts',fetcher,{
-        revalidateOnFocus:true,
-        revalidateOnReconnect:true,
-        shouldRetryOnError:true,
-        dedupingInterval:60000
+    let  urlbase = 'https://jsonplaceholder.typicode.com/posts';
+   
     
-    });
-
-    if(error) return <div>Error al cargar los dato</div>
-    if (!datos) return <div>Cargando...</div>
     
+        
+        const { data: datos,error,isLoading,isValidating} = useSWR<valoresCarta[]>(url,fetcher,{
+            revalidateOnFocus:true,
+            revalidateOnReconnect:true,
+            shouldRetryOnError:true,
+            dedupingInterval:1000
+        
+        });
+        
+     
+   if (error) return <div>Error al cargar los datos</div>
+    if (isLoading||isValidating) return <div>Cargando..</div>
+    if (!datos || datos.length===0) return <div>No hay datos</div>
 
     return (
         <div className=' px-4'>
