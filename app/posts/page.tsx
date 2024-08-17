@@ -16,7 +16,7 @@ export default async function page({searchParams,}:{searchParams?:{'userId'?:str
     
     return(
         <div>
-            <h1 className=' text-center bg-slate-400 text-white text-xl w-full'>Posts</h1>
+            
             <div className='flex justify-center'>
                 <SearchBar placeholder="Buscar por id de usuario..."/>
             </div>
