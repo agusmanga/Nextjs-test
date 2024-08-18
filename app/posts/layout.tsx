@@ -1,4 +1,5 @@
 
+
 export default function Layout({children}:{children:React.ReactNode}){
     return(
         <div className='  bg-gradient-to-b from-slate-700 to-yellow-50'>

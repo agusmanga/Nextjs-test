@@ -3,6 +3,7 @@
 import React from "react"
 import { useSearchParams,usePathname,useRouter } from "next/navigation"
 import { useDebouncedCallback } from "use-debounce";
+import { mutate } from "swr";
 
 export default function SearchBar({placeholder}:{placeholder:string}) {
     const parametrosBusqueda = useSearchParams();
@@ -10,7 +11,6 @@ export default function SearchBar({placeholder}:{placeholder:string}) {
     const {replace} = useRouter();
 
     const buscar = useDebouncedCallback((termino)=>{
-        console.log(termino);
         const parametro = new URLSearchParams(parametrosBusqueda);
         if (termino){
             parametro.set('userId',termino);
@@ -19,7 +19,10 @@ export default function SearchBar({placeholder}:{placeholder:string}) {
         else{
             parametro.delete('userId');
         }
-        replace(`${direccion}?${parametro.toString()}`);
+        //window.history.replaceState(null,'',`?${parametro.toString()}`);
+        //replace(`${direccion}?${parametro.toString()}`);
+        mutate(`https://jsonplaceholder.typicode.com/posts?userId=${termino}`);
+        console.log(`https://jsonplaceholder.typicode.com/posts?userId=${termino}`)
 },250);
 
     return (
