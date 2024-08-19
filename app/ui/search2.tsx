@@ -1,10 +1,12 @@
 import React from "react";
 import { useDebouncedCallback } from "use-debounce";
 
+
+//recibe hayBusqueda como prop
 export default function SearchBar2({ hayBusqueda }:{hayBusqueda:Function}) {
     //Debounce para no hacer tantos llamados
     const buscar = useDebouncedCallback((termino) => {
-        hayBusqueda(termino);  //
+        hayBusqueda(termino);  
     }, 250);
 
     return (

@@ -1,9 +1,7 @@
 'use client'
 
 import CartasDatos from '../cartasDatos';
-import { Suspense,useState,useCallback } from 'react';
-import { browser } from 'process';
-import { useSearchParams,usePathname,useRouter } from "next/navigation"
+import { Suspense,useState } from 'react';
 import SearchBar2 from '../ui/search2';
 
 export default  function Page({searchParams,}:{searchParams?:{'userId'?:string};}){
